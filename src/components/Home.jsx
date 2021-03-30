@@ -11,7 +11,7 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <div className="mt-1" style={bg}>
+        <div style={bg}>
           <div className="contain">
             <div className="title-wrapper text-center text-white">
               <h1 className="title">The World is at the tip of your tongue</h1>
@@ -33,6 +33,4 @@ const bg = {
   backgroundImage: `url("${neurolinks}")`, 
   height:'600px'
 }
-
-
 export default Home;
