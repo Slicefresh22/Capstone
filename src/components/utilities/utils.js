@@ -1,4 +1,4 @@
-
-export const setUri = (value) => {
-    console.log(value);
+import axios from 'axios'
+export const loadPrerence = ()=> {
+    const url = ''
 }

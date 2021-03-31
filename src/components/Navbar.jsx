@@ -21,7 +21,7 @@ function Navabar () {
         <Link className="nav-link" to={"#"} onClick={logout}>Logout</Link>:
         <Link className="nav-link" to={"#"} onClick={login}>Login</Link>
     return (
-        <div className="container-fluid">
+        <div className="container-fluid mb-4">
             <nav className="navbar navbar-expand-sm navbar-default">
                 <div className="navbar-brand">
                     <h3 className="ml-4">Capstone</h3>

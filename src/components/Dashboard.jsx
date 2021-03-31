@@ -7,6 +7,7 @@ import {setUri} from './utilities/utils'
 
 import Home from './Home';
 import LeftAside from './LeftAside';
+import Preference from './Preference';
 
 const Dashboard = () => {
     const [currentPage, setCurrentPage] = useState('dashboard'); 
@@ -89,7 +90,7 @@ const Dashboard = () => {
                             <LeftAside menuItems= {menuItems} handleChange={handleChange}></LeftAside>
                         </div>
                         <div className="col-lg-10 col-md-8">
-                            <Home></Home>
+                            <Preference></Preference>
                         </div>
                     </div>
                 </div>
