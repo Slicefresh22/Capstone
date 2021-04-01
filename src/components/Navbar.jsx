@@ -7,7 +7,6 @@ import { useOktaAuth } from '@okta/okta-react';
 function Navabar () {
     const history = useHistory();
     const { oktaAuth, authState } = useOktaAuth();
-    var user = {};
 
     if (authState.isPending) return null;
 

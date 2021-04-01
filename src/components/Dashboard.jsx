@@ -1,19 +1,16 @@
-import React, {useState, useEffect } from 'react'
-import Navbar from './Navbar';
-import {Link, Redirect} from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
-import { useOktaAuth } from '@okta/okta-react';
-import {setUri} from './utilities/utils'
-
+import React, {useState } from 'react'
+// import { Redirect} from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
+// import { useOktaAuth } from '@okta/okta-react';
 import Home from './Home';
 import LeftAside from './LeftAside';
 import Preference from './Preference';
 
 const Dashboard = () => {
     const [currentPage, setCurrentPage] = useState('dashboard'); 
-    const [history, setHistory] = useState(useHistory());
-    const [oktaAuth, setOktaAuth] = useState(useOktaAuth()); 
-    const [authState, setAuthState] = useState(useOktaAuth());
+    // const [history, setHistory] = useState(useHistory());
+    // const [oktaAuth, setOktaAuth] = useState(useOktaAuth()); 
+    // const [authState, setAuthState] = useState(useOktaAuth());
     const [menuItems, setMenuItems] = useState( [
         {
             id: 0,
@@ -38,12 +35,12 @@ const Dashboard = () => {
         toggleSelected(selected);
     }
 
-    const toggleSelected = async (name)=>{
-        const selected = await menuItems.filter(menu => menu.name == name); 
+    const toggleSelected = (name)=>{
+        const selected =  menuItems.filter(menu => menu.name === name); 
         const changeStatus = [];
         menuItems.forEach(menu => {
-            if(menu.name == selected[0].name){
-                if(menu.selected == false){
+            if(menu.name === selected[0].name){
+                if(menu.selected === false){
                     const temp = {...menu, selected: true}; 
                     changeStatus.push(temp);
                 }
@@ -60,12 +57,12 @@ const Dashboard = () => {
     }
 
 
-    const login = async () => history.push('/login');
+    // const login = async () => history.push('/login');
     
-    const logout = async () => {
-        oktaAuth.signOut();
-        if(!authState.isAuthenticated) <Redirect to= {{pathname: '/login'}}></Redirect>
-    }
+    // const logout = async () => {
+    //     oktaAuth.signOut();
+    //     if(!authState.isAuthenticated) <Redirect to= {{pathname: '/login'}}></Redirect>
+    // }
 
     switch(currentPage){
         case 'dashboard':
@@ -95,6 +92,9 @@ const Dashboard = () => {
                     </div>
                 </div>
             )
+        default: {
+            return null
+        }
     }
 };
 

@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter as Router, Route, Link, Switch, withRouter} from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
 import {Security, SecureRoute , LoginCallback } from '@okta/okta-react';
 import {OktaAuth, toRelativeUrl } from '@okta/okta-auth-js'; 
 import { oktaAuthConfig, oktaSignInConfig } from './components/auth/config';
