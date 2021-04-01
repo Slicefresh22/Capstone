@@ -14,7 +14,7 @@ class Home extends Component {
         <div style={bg}>
           <div className="contain">
             <div className="title-wrapper text-center text-white">
-              <h1 className="title">The World is at the tip of your tongue</h1>
+              <h1 className="title">The world is at the tip of your tongue</h1>
               <h3 className="subtittle">Control every aspect of your home with your voice</h3>
             </div>
           </div>

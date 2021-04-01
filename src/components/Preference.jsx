@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {loadPrerence} from './utilities/utils'
+import {loadPrerence, getTemperature} from './utilities/utils'
 
 const Preference = ()=> {
     const [myAPI, setMyAPI] = useState([]); 
@@ -9,11 +9,8 @@ const Preference = ()=> {
     
 
     useEffect(()=>{
-        const fetcall = async () => {
-            await handleLoadPreference();
-        }
-        
-        fetcall();
+        loadPrerence().then(res => setMyAPI(res.data.Items))
+        .catch(err => console.log(err)); 
     })
 
     const handleLoadPreference =  ()=> {

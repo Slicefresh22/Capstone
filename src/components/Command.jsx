@@ -1,6 +1,6 @@
 
 import React, {useState, useEffect} from 'react'
-import {loadPrerence} from './utilities/utils';
+import {loadPrerence, getTemperature} from './utilities/utils';
 import {recognition, say, setVoice, startRecoding, stopRecording, getErrors} from './CommandControl';
 
 const Command = () => {
@@ -29,7 +29,7 @@ const Command = () => {
                                 <button onClick= {startRecoding()} className="btn btn-warning" style={{backgroundColor:'orange'}}>Start Listening</button>
                             </div>
                             <div className="col-lg-6">
-                                <button onClick= {stopRecording()} className="btn btn-danger" style={{backgroundColor:''}}>Stop Listening</button>
+                                <button onClick= {getTemperature} className="btn btn-danger" style={{backgroundColor:''}}>Stop Listening</button>
                             </div>
                         </div>
                     </div>
