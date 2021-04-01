@@ -1,4 +1,5 @@
 import React, {useState } from 'react'
+import Command from './Command';
 // import { Redirect} from 'react-router-dom';
 // import { useHistory } from 'react-router-dom';
 // import { useOktaAuth } from '@okta/okta-react';
@@ -73,7 +74,7 @@ const Dashboard = () => {
                             <LeftAside menuItems= {menuItems} handleChange={handleChange}></LeftAside>
                         </div>
                         <div className="col-lg-10 col-md-8">
-                            <Home></Home>
+                            <Command></Command>
                         </div>
                     </div>
                 </div>

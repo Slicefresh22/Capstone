@@ -92,7 +92,7 @@ const Preference = ()=> {
                                     <form className="form-group">
                                         <input onChange={handleChange()} style={{paddingLeft: '100px'}} className="form-control" type="text" name={api.name} 
                                         /> <br/>
-                                        <p>Current endpoint: {api.ur}</p>
+                                        <p><strong>Current endpoint: </strong> {api.url}</p>
                                          <i className="fas fa-edit" style={{float: 'right'}}></i>
                                     </form>
                                 </div>

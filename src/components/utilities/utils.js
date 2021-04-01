@@ -8,3 +8,4 @@ export const loadPrerence = async ()=> {
 export const savePreference = async (data)=> {
     
 }
+
