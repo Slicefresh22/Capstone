@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {loadPrerence} from './utilities/utils'
+import {loadPrerence} from '../utilities/utils'
 
 const Preference = ()=> {
     const [myAPI, setMyAPI] = useState([]); 

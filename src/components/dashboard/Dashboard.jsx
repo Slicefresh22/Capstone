@@ -1,10 +1,11 @@
 import React, {useState } from 'react'
-import Command from './Command';
+import Command from '../command/Command';
+import LeftAside from '../left_aside/LeftAside';
+import Preference from '../preference/Preference';
 // import { Redirect} from 'react-router-dom';
 // import { useHistory } from 'react-router-dom';
 // import { useOktaAuth } from '@okta/okta-react';
-import LeftAside from './LeftAside';
-import Preference from './Preference';
+
 
 const Dashboard = () => {
     const [currentPage, setCurrentPage] = useState('dashboard'); 

@@ -1,13 +1,12 @@
 import React, { Component } from 'react'; 
-import neurolinks from './images/neurolinks.jpg';
-import '../../src/App.css';
+import neurolinks from '../images/neurolinks.jpg';
+import '../../App.css';
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {  };
   }
-
   render() {
     return (
       <div>

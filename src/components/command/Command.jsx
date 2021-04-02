@@ -1,8 +1,8 @@
 
 import React, {useState} from 'react'
-import {loadPrerence, getTemperature, getHomeEnvi} from './utilities/utils';
+import {loadPrerence, getTemperature, getHomeEnvi} from '../utilities/utils';
 import {recognition, say, setVoice, startRecoding, stopRecording, getErrors} from './CommandControl';
-import {responseMessage, getResponseHistory} from './utilities/responseData';
+import {responseMessage, getResponseHistory} from '../utilities/responseData';
 
 const Command = () => {
     const [command, setCommand] = useState('');
@@ -11,7 +11,7 @@ const Command = () => {
     //const [voiceRecognition, setVoiceRecognition] = useState(recognition);
     // const [tempUrl, setTempUrl] = useState('');
 
-    const speak = ()=>  (e) => {
+    const speak = ()=> (e) => {
         getTemperature()
         const message = getMessage();
         say(message, 4);
