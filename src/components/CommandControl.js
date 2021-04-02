@@ -7,7 +7,6 @@ let speech = null;
 let wakeUpName = '';
 
 
-
 export const startRecoding =  () => async (e) => {
     await recognition.start();
     // e.preventDefault();
@@ -26,7 +25,7 @@ recognition.onerror = (event) => {
 
 export const say = (message, voice = 4) => {
     var utterance  = new SpeechSynthesisUtterance(message);
-    utterance .voice = setVoice(voice);
+    utterance.voice = setVoice(voice);
     synth.speak(utterance );
 }
 
@@ -48,7 +47,7 @@ recognition.onspeechstart = (event)=> {
     recognition.onresult = (event)=> {
         recognition.stop();
         wakeUpName = event.results[0][0].transcript;
-        if(wakeUpName == 'Karen' || wakeUpName == 'karen'){
+        if(wakeUpName === 'Karen' || wakeUpName === 'karen'){
             say('Hi, what can id do for you?')
             recognition.stop();
             recognition.start();

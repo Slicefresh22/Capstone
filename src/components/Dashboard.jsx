@@ -3,7 +3,6 @@ import Command from './Command';
 // import { Redirect} from 'react-router-dom';
 // import { useHistory } from 'react-router-dom';
 // import { useOktaAuth } from '@okta/okta-react';
-import Home from './Home';
 import LeftAside from './LeftAside';
 import Preference from './Preference';
 

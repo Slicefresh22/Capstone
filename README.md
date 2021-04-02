@@ -68,3 +68,15 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+
+{statusMessage.forEach(response => (
+    <div key={response.id} className="alert alert-success mt-2">
+        <p className="text-left">@ {response.time}</p>
+        <div className="text-center">
+            <h4>{response.data}</h4>
+        </div>
+    </div>
+    ))
+}
