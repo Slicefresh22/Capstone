@@ -48,14 +48,10 @@ recognition.onspeechstart = (event)=> {
         recognition.stop();
         wakeUpName = event.results[0][0].transcript;
         if(wakeUpName === 'Karen' || wakeUpName === 'karen'){
-            say('Hi, what can id do for you?')
             recognition.stop();
-            recognition.start();
+            say('Hi, what can i do for you?');
         }
-        else{
-            stopRecording();
-            say(wakeUpName);
-        }
+
         // recognition.stop();
         // startRecoding();
     }

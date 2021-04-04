@@ -1,15 +1,12 @@
 
 import React, {useState} from 'react'
-import {loadPrerence, getTemperature, getHomeEnvi} from '../utilities/utils';
+import {loadPrerence, getTemperature, getHomeEnvi, parseLightCommand} from '../utilities/utils';
 import {recognition, say, setVoice, startRecoding, stopRecording, getErrors} from './CommandControl';
 import {responseMessage, getResponseHistory} from '../utilities/responseData';
 
 const Command = () => {
     const [command, setCommand] = useState('');
     const [statusMessage, setStatusMessage] = useState([]); 
-
-    //const [voiceRecognition, setVoiceRecognition] = useState(recognition);
-    // const [tempUrl, setTempUrl] = useState('');
 
     const speak = ()=> (e) => {
         getTemperature()
@@ -25,8 +22,22 @@ const Command = () => {
         return message;
     }
 
+    const send = (event)=> {
+        event.preventDefault();
+        getLightStatus(command);
+    }
+
+    const handleOnchange = (event)=> {
+        event.preventDefault();
+        setCommand(event.target.value);
+    }
+
     const updateState =  ()=> {
         setStatusMessage(getResponseHistory());
+    }
+
+    const getLightStatus = (status)=> {
+        parseLightCommand(status);
     }
 
     return (
@@ -49,15 +60,11 @@ const Command = () => {
                             <br/>
                             <div className="mt-4 mb-4">
                                 <p>Enter Command Manually Below</p>
-                                <div className="card">
-                                    <div className="card-body">
-                                        <form className="form-group">
-                                            <input className="form-control" type="text" name="command" style={{height: '100px'}}/>
-                                            <br/>
-                                            <button className="btn" style={{backgroundColor:'orange'}}>Send</button>
-                                        </form>
-                                    </div>
-                                </div>
+                                <form className="form-group">
+                                    <input onChange={handleOnchange} className="form-control" type="text" name="command" style={{height: '100px'}}/>
+                                    <br/>
+                                    <button onClick={send} className="btn" style={{backgroundColor:'orange'}}>Send</button>
+                                </form>
                             </div>
                         </div>
                     </div>

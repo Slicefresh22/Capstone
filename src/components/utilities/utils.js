@@ -1,15 +1,12 @@
 import axios from 'axios'
+import { say } from '../command/CommandControl';
 let preferenceItems = [];
 let HomeEnvi = {};
-
 const url = 'https://37vspy4wf0.execute-api.us-west-2.amazonaws.com/prod/capstone';
+
 export const loadPrerence = async ()=> {
    const promise = await axios.get(url)
    return promise;
-}
-
-export const savePreference = async (data)=> {
-    
 }
 
 export const getTemperature = async () => {
@@ -62,10 +59,8 @@ const setHomeEnvi = (feeds, fliedNum, fieldName, currentVar) => {
          }
       });
       HomeEnvi = {...HomeEnvi, temperature: currentVar};
-      // console.log(HomeEnvi)
    }
    if(fieldName === 'humidity'){
-      //console.log(feeds)
       feeds.forEach(fee => {
          if(fee[`${fliedNum}`] != null){
             currentVar = fee[`${fliedNum}`];
@@ -75,7 +70,48 @@ const setHomeEnvi = (feeds, fliedNum, fieldName, currentVar) => {
       // console.log(HomeEnvi)
    }
 }
-
 export const getHomeEnvi = () => {
    return HomeEnvi;
+}
+
+export const parseLightCommand = (command) => {
+   let lightStatus = null;
+   const lightOn = 'light on';
+   const lightOn2 = 'turn on the light';
+   const lightOn3 = 'turn the light on';
+   const lightOff = 'light off';
+   const lightOff2 = 'turn off the light';
+   const lightOff3 = 'turn the light off';
+
+   if(parseReExp(lightOn).test(command) || parseReExp(lightOn2).test(command) || parseReExp(lightOn3).test(command)) {
+      lightStatus = 1;
+   }
+
+   if(parseReExp(lightOff).test(command) || parseReExp(lightOff2).test(command) || parseReExp(lightOff3).test(command)) {
+      lightStatus = 0;
+   }
+
+   writeLightStatus(lightStatus);
+}
+
+// parins command cheking for matchin key words
+const parseReExp = (phrase) => {
+  return new RegExp('\\b' + phrase + '\\b');
+}
+
+const writeLightStatus = async (lightStatus) => {
+   console.log(lightStatus);
+   if(lightStatus != null){
+      const field = 'field3';
+      await axios.get(`https://api.thingspeak.com/update?api_key=P0CY7LTP925HD9R2&field1=${lightStatus}`)
+      .then(res => {
+         if(res.status == 200){
+            say('Okay'); // speaking 
+         }
+      })
+      .catch(err => console.log(err));
+   }
+   else {
+      say("Sorry, I didn't get that. Please try again...");
+   } 
 }
