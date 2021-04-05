@@ -9,6 +9,23 @@ export const loadPrerence = async ()=> {
    return promise;
 }
 
+export const savePreference = async(data) => {
+   // only update if not empty 
+   await data.map(item => {
+      if(item.value !== '' || item.url !== null) {
+         const data = {
+            "id": parseInt(item.id),
+            "url": item.value
+         }
+         console.log(data);
+         axios.put(url, {
+            body: data
+         })
+         .then(response => console.log(response))
+         .catch(err => console.log(err));
+      }
+   })
+}
 export const getTemperature = async () => {
    let currentTemp = 0;
    let data = [];

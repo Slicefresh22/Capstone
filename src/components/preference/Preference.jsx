@@ -1,17 +1,17 @@
 import React, {useState, useEffect} from 'react'
-import {loadPrerence} from '../utilities/utils'
+import {loadPrerence, savePreference} from '../utilities/utils'
 
 const Preference = ()=> {
     const [myAPI, setMyAPI] = useState([]); 
-    const [tempUrl, setTempUrl] = useState('');
-    const [humidityUrl, setHumidityUrl] = useState(''); 
-    const [proximityUrl, setProximityUrl] = useState('');
+    const [tempUrl, setTempUrl] = useState({id: null, url: ''});
+    const [humidityUrl, setHumidityUrl] = useState({id: null, url: ''}); 
+    const [proximityUrl, setProximityUrl] = useState({id: null, url: ''});
     
 
     useEffect(()=>{
-        loadPrerence().then(res => setMyAPI(res.data.Items))
-        .catch(err => console.log(err)); 
-    })
+        loadPrerence().then(res =>setMyAPI(res.data.Items))
+        .catch(err => console.log(err));
+    });
 
     const handleLoadPreference =  ()=> {
         const data = loadPrerence()
@@ -26,16 +26,17 @@ const Preference = ()=> {
 
     const handleChange = ()=> (event)=>{
         // updateUrl(event.target.name, event.target.value); 
-        console.log(event.target.name);
-        switch(event.target.name){
+        const {name, id, value} = event.target;
+    
+        switch(name){
             case 'temp':
-                setTempUrl(event.target.value);
+                setTempUrl({id,value});
                 break;
             case 'humid':
-                setHumidityUrl(event.target.value);
+                setHumidityUrl({id, value});
                 break;
             case 'prox':
-                setProximityUrl(event.target.value);
+                setProximityUrl({id,value});
                 break;
             default:
                 console.log('error updateUrl')
@@ -60,7 +61,9 @@ const Preference = ()=> {
 
     const saveChange = () => (e)=>{
         e.preventDefault();
-        console.log({tempUrl, proximityUrl, humidityUrl});
+        const data = [tempUrl, humidityUrl, proximityUrl];
+        // save data to data base 
+        savePreference(data);
     }
 
     return (
@@ -87,7 +90,7 @@ const Preference = ()=> {
                             <div className="col-lg-8">
                                 <div className="">
                                     <form className="form-group">
-                                        <input onChange={handleChange()} style={{paddingLeft: '100px'}} className="form-control" type="text" name={api.name} 
+                                        <input id={api.id} onChange={handleChange()} style={{paddingLeft: '100px'}} className="form-control" type="text" name={api.name} 
                                         /> <br/>
                                         <p><strong>Current endpoint: </strong> {api.url}</p>
                                          <i className="fas fa-edit" style={{float: 'right'}}></i>
