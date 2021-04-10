@@ -13,16 +13,16 @@ const Preference = ()=> {
         .catch(err => console.log(err));
     });
 
-    const handleLoadPreference =  ()=> {
-        const data = loadPrerence()
-        data.then(response => {
-            const {Items} = response.data; 
-            setMyAPI(Items)
-        })
-        .catch(error => {
-            console.log(error);
-        })
-    }
+    // const handleLoadPreference =  ()=> {
+    //     const data = loadPrerence()
+    //     data.then(response => {
+    //         const {Items} = response.data; 
+    //         setMyAPI(Items)
+    //     })
+    //     .catch(error => {
+    //         console.log(error);
+    //     })
+    // }
 
     const handleChange = ()=> (event)=>{
         // updateUrl(event.target.name, event.target.value); 
@@ -43,21 +43,21 @@ const Preference = ()=> {
         }
     }
 
-    const updateUrl = (servicename, value) =>{
-        const selected =  myAPI.filter(api => api.name === servicename);
-        const tempAPI = [];
-        myAPI.forEach(api => {
-            if(api.name === selected[0].name){
-                const temp = {...api, url: value}; 
-                tempAPI.push(temp);
-            }
-            else {
-                tempAPI.push(api); 
-            }
-        })
+    // const updateUrl = (servicename, value) =>{
+    //     const selected =  myAPI.filter(api => api.name === servicename);
+    //     const tempAPI = [];
+    //     myAPI.forEach(api => {
+    //         if(api.name === selected[0].name){
+    //             const temp = {...api, url: value}; 
+    //             tempAPI.push(temp);
+    //         }
+    //         else {
+    //             tempAPI.push(api); 
+    //         }
+    //     })
 
-        setMyAPI(tempAPI); 
-    }
+    //     setMyAPI(tempAPI); 
+    // }
 
     const saveChange = () => (e)=>{
         e.preventDefault();

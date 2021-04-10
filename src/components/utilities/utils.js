@@ -13,7 +13,7 @@ export const loadPrerence = async ()=> {
 
 export const savePreference = async(data) => {
    // only update if not empty 
-   await data.map(item => {
+   await data.forEach(item => {
       if(item.value !== '' || item.url !== null) {
          const data = {
             "id": parseInt(item.id),
@@ -106,10 +106,9 @@ export const parseLightCommand = (command) => {
 
 const writeLightStatus = async (lightStatus) => {
    if(lightStatus != null){
-      const field = 'field3';
       await axios.get(`https://api.thingspeak.com/update?api_key=P0CY7LTP925HD9R2&field1=${lightStatus}`)
       .then(res => {
-         if(res.status == 200){
+         if(res.status === 200){
             playSound(0); // play alight switch sound  
          }
       })

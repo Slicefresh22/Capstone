@@ -4,8 +4,6 @@ export const recognition = new window.webkitSpeechRecognition() || new window.Sp
 export const synth = window.speechSynthesis;
 let myerror = [];
 let speech = null;
-let wakeUpName = '';
-
 
 export const startRecoding =  () => async (e) => {
     await recognition.start();

@@ -1,7 +1,7 @@
 
 import React, {useState} from 'react'
-import {loadPrerence, getTemperature, getHomeEnvi, parseLightCommand, commandSwitcher} from '../utilities/utils';
-import {recognition, say, setVoice, startRecoding, stopRecording, getErrors} from './CommandControl';
+import {getTemperature, getHomeEnvi, commandSwitcher} from '../utilities/utils';
+import {say,startRecoding, getErrors} from './CommandControl';
 import {responseMessage, getResponseHistory} from '../utilities/responseData';
 
 const Command = () => {

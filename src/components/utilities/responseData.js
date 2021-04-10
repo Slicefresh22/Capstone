@@ -131,6 +131,8 @@ export const itContainsGeneric = (command, category) => {
             return itContains(lightPhrases, command); 
         case 'wakename':
             return itContains(wakeNamePhrase, command); 
+        default:
+            return false;
     }
 }
 
