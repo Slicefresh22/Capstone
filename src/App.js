@@ -30,10 +30,10 @@ function App() {
         >
        <Navabar></Navabar>
       <Switch>
-        <Route path='/' exact={true} component={Home} />
         <SecureRoute path='/dashboard' component={Dashboard} />
         <Route path='/login' render={() => <Login config={oktaSignInConfig} />} />
         <Route path='/login/callback' component={LoginCallback} />
+        <Route path='/' exact={true} component={Home} />
       </Switch>
     </Security>
   );
