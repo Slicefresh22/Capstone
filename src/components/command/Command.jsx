@@ -1,6 +1,6 @@
 
 import React, {useState} from 'react'
-import {loadPrerence, getTemperature, getHomeEnvi, parseLightCommand} from '../utilities/utils';
+import {loadPrerence, getTemperature, getHomeEnvi, parseLightCommand, commandSwitcher} from '../utilities/utils';
 import {recognition, say, setVoice, startRecoding, stopRecording, getErrors} from './CommandControl';
 import {responseMessage, getResponseHistory} from '../utilities/responseData';
 
@@ -15,6 +15,13 @@ const Command = () => {
         if(getErrors().length > 0) console.log(getErrors());
         updateState();
     }
+
+    const updateState =  ()=> {
+        setStatusMessage(getResponseHistory());
+    }
+
+    // update the screen every 2 second
+    window.setInterval(updateState, 1000);
 
     const getMessage =  ()=> {
         const data =  getHomeEnvi();
@@ -32,12 +39,8 @@ const Command = () => {
         setCommand(event.target.value);
     }
 
-    const updateState =  ()=> {
-        setStatusMessage(getResponseHistory());
-    }
-
     const getLightStatus = (status)=> {
-        parseLightCommand(status);
+        commandSwitcher(status);
     }
 
     return (

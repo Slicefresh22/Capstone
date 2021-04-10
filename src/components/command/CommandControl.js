@@ -1,3 +1,4 @@
+import { commandSwitcher } from "../utilities/utils";
 
 export const recognition = new window.webkitSpeechRecognition() || new window.SpeechRecognition();
 export const synth = window.speechSynthesis;
@@ -14,18 +15,19 @@ export const startRecoding =  () => async (e) => {
 
 recognition.onresult = (event)=> {
     speech = event.results[0][0].transcript;
-    say(speech);
-    console.log(event.target.grammars);
+    // say(speech);
+    commandSwitcher(speech);
 }
 
 recognition.onerror = (event) => {
     myerror.push('Error: ' + event.error);
-    say("Oops, an error has occured: " + event.error);
+    say("Oops, I have encountered an error: " + event.error);
 };
 
-export const say = (message, voice = 4) => {
+export const say = (message, voice = 3) => {
     var utterance  = new SpeechSynthesisUtterance(message);
     utterance.voice = setVoice(voice);
+    utterance.rate = 1;
     synth.speak(utterance );
 }
 

@@ -1,6 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
+import {parseReExp} from '../utilities/utils'
 
 var responseHistory = []; 
+const greetingsPhrase = [ 'Hello there', 'hello', 'Hello', 'Hi', 'hi', 'goodmorning', 'hey', 'Hey']; 
 
 export const responseMessage = (data, topic = '')=> {
     const {temperature, humidity} = data;
@@ -80,4 +82,14 @@ const getTimeAndDate = () => {
 
 export const getResponseHistory = () => {
     return responseHistory; 
+}
+
+export const itContainsGreetings = (command) =>{
+    let contains = false;
+    greetingsPhrase.forEach(phrase =>{
+        if(parseReExp(phrase).test(command) || parseReExp(phrase.toUpperCase()).test(command) || parseReExp(phrase.toLowerCase()).test(command)){
+            contains = true;
+        }
+    })
+    return contains; 
 }
