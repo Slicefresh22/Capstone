@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { recognition, say } from '../command/CommandControl';
-import {responseMessage, itContainsGreetings} from './responseData';
+import { say, restartRecognition} from '../command/CommandControl';
+import {responseMessage, itContainsGreetings, itContainsLightOn, itContainsLightOff, itContainsGeneric} from './responseData';
 import {playSound} from '../audio/Audio'
 let preferenceItems = [];
 let HomeEnvi = {};
@@ -95,26 +95,13 @@ export const getHomeEnvi = () => {
 
 export const parseLightCommand = (command) => {
    let lightStatus = null;
-   const lightOn = 'light on';
-   const lightOn2 = 'turn on the light';
-   const lightOn3 = 'turn the light on';
-   const lightOn4 = 'turn on light';
-   const lightOff = 'light off';
-   const lightOff2 = 'turn off the light';
-   const lightOff3 = 'turn the light off';
-
-   if(parseReExp(lightOn).test(command) || parseReExp(lightOn2).test(command) || parseReExp(lightOn3).test(command) || parseReExp(lightOn4).test(command)) {
+   if(itContainsLightOn(command)) {
       lightStatus = 1;
    }
-   if(parseReExp(lightOff).test(command) || parseReExp(lightOff2).test(command) || parseReExp(lightOff3).test(command)) {
+   if(itContainsLightOff(command)) {
       lightStatus = 0;
    }
    writeLightStatus(lightStatus);
-}
-
-// parins command cheking for matchin key words
-export const  parseReExp = (phrase) => {
-  return new RegExp('\\b' + phrase + '\\b');
 }
 
 const writeLightStatus = async (lightStatus) => {
@@ -132,42 +119,32 @@ const writeLightStatus = async (lightStatus) => {
       });
    }
    else {
-      say("Sorry, i'm not sure what you meant, please try again...");
+      say("Sorry, i'm not sure what you meant, please try again..."); // speaking 
    } 
 }
 
 export const commandSwitcher = (command) => {
-   const temp = 'temperature';  // contains the word temp or humidity
-   const temp1 = 'temp';
-   const humid = 'humidity'; 
-   const humid1 = 'humid';
-   const light = 'light';  // contains the word light
-   const wakeName = 'jasmine'; // contains the wor
-   const wakeName1 = 'jazmine'; 
-   const wakeName2 = 'jazz';
-
    // contains the word temperature or humidity
-   if(parseReExp(temp).test(command) || parseReExp(temp1).test(command) || parseReExp(humid).test(command) || parseReExp(humid1).test(command)){
-      getTemperature(); 
+   if(itContainsGeneric(command, 'temperature') || itContainsGeneric(command, 'humidity')){
+      getTemperature();
       const data = getHomeEnvi();
       const message = responseMessage(data, '');
-      say(message);
+      say(message); // speaking 
    }
    // contains the word light 
-   else if(parseReExp(light).test(command)) {
+   else if(itContainsGeneric(command, 'light')) {
       parseLightCommand(command);
    }
    // contains the wakeName
-   else if(parseReExp(wakeName).test(command) || parseReExp(wakeName1).test(command) || parseReExp(wakeName2).test(command)) {
+   else if(itContainsGeneric(command, 'wakename')) {
       say("Hello, I'm listening..."); 
-      recognition.stop();
-      recognition.start();
    }
    else if(itContainsGreetings(command)){
       say("Hi");
       setTimeout(function(){
          say('What can i help you with?.')
-      }, 2000); 
+      }, 2000);
+      restartRecognition();
    }
    else {
       say("Hello");
@@ -177,3 +154,4 @@ export const commandSwitcher = (command) => {
       }, 2000); 
    }
 }
+

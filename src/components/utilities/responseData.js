@@ -1,8 +1,13 @@
 import { v4 as uuidv4 } from 'uuid';
-import {parseReExp} from '../utilities/utils'
 
 var responseHistory = []; 
-const greetingsPhrase = [ 'Hello there', 'hello', 'Hello', 'Hi', 'hi', 'goodmorning', 'hey', 'Hey']; 
+const greetingsPhrases = [ 'Hello there', 'hello', 'Hello', 'Hi', 'hi', 'good morning', 'hey', 'Hey']; 
+const lightOnPhrases = ['light on', 'turn on the light', 'turn the light on','turn on light']; 
+const lightOffPhrases = ['light off', 'turn off the light', 'turn the light off']; 
+const temperaturePhrases = ['temperature', 'temp','weather'];
+const humidityPhrases = ['humidity', 'humid']; 
+const lightPhrases = ['light']; 
+const wakeNamePhrase = ['jasmine', 'jazmine', 'jazz'];
 
 export const responseMessage = (data, topic = '')=> {
     const {temperature, humidity} = data;
@@ -69,15 +74,17 @@ const generateId = () => {
 const getTimeAndDate = () => {
     var time = Date.now(); 
     var date = new Date(time); 
-    const hour = date.getHours(); 
+    const hours = date.getHours(); 
     const tempmin = date.getMinutes();
     let minute =''; 
     if(tempmin < 10){
         minute = `0${tempmin}`
     }
-    minute = tempmin; 
+    
+    let theTime = ''; 
+    hours < 12 ? theTime = `${hours}:${minute}` : theTime = `${hours - 12}:${minute}`; 
 
-    return `${hour - 12}:${minute}`; 
+    return theTime;
 }
 
 export const getResponseHistory = () => {
@@ -86,10 +93,58 @@ export const getResponseHistory = () => {
 
 export const itContainsGreetings = (command) =>{
     let contains = false;
-    greetingsPhrase.forEach(phrase =>{
+    greetingsPhrases.forEach(phrase =>{
         if(parseReExp(phrase).test(command) || parseReExp(phrase.toUpperCase()).test(command) || parseReExp(phrase.toLowerCase()).test(command)){
             contains = true;
         }
     })
     return contains; 
+}
+
+export const itContainsLightOn = (command) => {
+    let contains = false;
+    lightOnPhrases.forEach(phrase =>{
+        if(parseReExp(phrase).test(command) || parseReExp(phrase.toUpperCase()).test(command) || parseReExp(phrase.toLowerCase()).test(command)){
+            contains = true;
+        }
+    })
+    return contains; 
+}
+
+export const itContainsLightOff = (command) => {
+    let contains = false;
+    lightOffPhrases.forEach(phrase =>{
+        if(parseReExp(phrase).test(command) || parseReExp(phrase.toUpperCase()).test(command) || parseReExp(phrase.toLowerCase()).test(command)){
+            contains = true;
+        }
+    })
+    return contains; 
+}
+
+export const itContainsGeneric = (command, category) => {
+    switch(category){
+        case 'temperature':
+             return itContains(temperaturePhrases, command); 
+        case 'humidity':
+            return itContains(humidityPhrases, command); 
+        case 'light':
+            return itContains(lightPhrases, command); 
+        case 'wakename':
+            return itContains(wakeNamePhrase, command); 
+    }
+}
+
+const itContains = (data, command) => {
+    let contains = false;
+    data.forEach(phrase =>{
+        if(parseReExp(phrase).test(command) || parseReExp(phrase.toUpperCase()).test(command) || parseReExp(phrase.toLowerCase()).test(command)){
+            contains = true;
+        }
+    })
+    return contains;
+}
+
+// parins command cheking for matchin key words
+const  parseReExp = (phrase) => {
+    return new RegExp('\\b' + phrase + '\\b');
 }
