@@ -1,6 +1,6 @@
 {
   "name": "capstone",
-  "homepage": ".",
+  "homepage": "https://mycapstone.netlify.app/capstone",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
