@@ -106,7 +106,7 @@ export const parseLightCommand = (command) => {
 
 const writeLightStatus = async (lightStatus) => {
    if(lightStatus != null){
-      await axios.get(`https://api.thingspeak.com/update?api_key=P0CY7LTP925HD9R2&field1=${lightStatus}`)
+      await axios.get(`https://api.thingspeak.com/update?api_key=0V9GIV8P3WZQRD4I&field1=${lightStatus}`)
       .then(res => {
          if(res.status === 200){
             playSound(0); // play alight switch sound  
