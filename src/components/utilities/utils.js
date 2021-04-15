@@ -154,3 +154,15 @@ export const commandSwitcher = (command) => {
    }
 }
 
+
+export const getCurrentUser = () => {
+   const idToken = JSON.parse(localStorage.getItem("okta-token-storage"));
+
+   const user = {
+       fullname: idToken.idToken.claims.name,
+       email: idToken.idToken.claims.email,
+       username: idToken.idToken.claims.preferred_username
+   }
+   
+   return user;
+}
