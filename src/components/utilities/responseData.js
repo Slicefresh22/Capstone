@@ -148,5 +148,6 @@ const itContains = (data, command) => {
 
 // parins command cheking for matchin key words
 const  parseReExp = (phrase) => {
-    return new RegExp('\\b' + phrase + '\\b');
+    // return new RegExp('\\b' + phrase + '\\b');
+    return new RegExp("");
 }
