@@ -4,6 +4,10 @@ import {responseMessage, itContainsGreetings, itContainsLightOn, itContainsLight
 import {playSound} from '../audio/Audio'
 let preferenceItems = [];
 let HomeEnvi = {};
+let home = {};
+let tempUrl;
+let humidUrl;
+let lightOnOff = '';
 const url = 'https://37vspy4wf0.execute-api.us-west-2.amazonaws.com/prod/capstone';
 
 export const loadPrerence = async ()=> {
@@ -106,10 +110,11 @@ export const parseLightCommand = (command) => {
 
 const writeLightStatus = async (lightStatus) => {
    if(lightStatus != null){
-      await axios.get(`https://api.thingspeak.com/update?api_key=0V9GIV8P3WZQRD4I&field1=${lightStatus}`)
+      await axios.post(`https://api.thingspeak.com/update?api_key=0V9GIV8P3WZQRD4I&field1=${lightStatus}`)
       .then(res => {
          if(res.status === 200){
-            playSound(0); // play alight switch sound  
+            playSound(0); // play alight switch sound
+            getLightStatus();
          }
       })
       .catch(err =>{
@@ -157,7 +162,6 @@ export const commandSwitcher = (command) => {
 
 export const getCurrentUser = () => {
    const idToken = JSON.parse(localStorage.getItem("okta-token-storage"));
-
    const user = {
        fullname: idToken.idToken.claims.name,
        email: idToken.idToken.claims.email,
@@ -165,4 +169,86 @@ export const getCurrentUser = () => {
    }
    
    return user;
+}
+
+
+const loadData = async () => {
+   await loadPrerence().then(res => res)
+   .then(res => {
+      tempUrl =  res.data.Items[2].url;
+      humidUrl = res.data.Items[1].url; 
+
+      getWeatherData('temp', tempUrl);
+      getWeatherData('', humidUrl); 
+   })
+}
+
+
+
+const getWeatherData = async (cat, url) => {
+   if(cat === 'temp'){
+       await axios.get(url)
+       .then(res => {
+           const {feeds} = res.data;
+           let temp = [];
+           feeds.forEach(f => {
+               if(parseInt(f.field1)){
+                   temp.push(f.field1);
+               }
+            })
+         
+         // console.log(temp);
+         home = {...home, averageTemp: calAvgtemp(temp)};
+       })
+       .catch(err => console.log(err));
+   }
+   else {
+       await axios.get(url)
+       .then(res => {
+           const {feeds} = res.data;
+           let humid = [];
+           feeds.forEach(f => {
+               if(parseInt(f.field2)){
+                   humid.push(f.field2);
+               }
+           })
+
+      home = {...home, averageHumid: calAvgtemp(humid)}
+
+       })
+       .catch(err => console.log(err));
+   }
+}
+
+const calAvgtemp = (data) => {
+   let sum = 0; 
+   data.forEach(item => {
+       sum += parseInt(item);
+   })
+
+   return Math.floor(sum / data.length);
+}
+
+export const getAverages = () => {
+   loadData();
+   return home;
+}
+
+const LightStatus = async () => {
+   await axios.get(`https://api.thingspeak.com/channels/1348356/fields/1.json?api_key=MKK4AAYSXG0A4H02&results=1`)
+   .then(res => {
+      console.log(res.data.feeds[0].field1);
+      if(parseInt(res.data.feeds[0].field1) === 1) {
+         lightOnOff = 'ON'; 
+      }
+      else {
+         lightOnOff = 'OFF';
+      }
+   })
+   .catch(err => console.log(err));
+}
+
+export const getLightStatus = () => {
+   LightStatus();
+   return lightOnOff;
 }

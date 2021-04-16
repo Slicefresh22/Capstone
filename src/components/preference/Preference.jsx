@@ -13,17 +13,6 @@ const Preference = ()=> {
         .catch(err => console.log(err));
     });
 
-    // const handleLoadPreference =  ()=> {
-    //     const data = loadPrerence()
-    //     data.then(response => {
-    //         const {Items} = response.data; 
-    //         setMyAPI(Items)
-    //     })
-    //     .catch(error => {
-    //         console.log(error);
-    //     })
-    // }
-
     const handleChange = ()=> (event)=>{
         // updateUrl(event.target.name, event.target.value); 
         const {name, id, value} = event.target;
@@ -68,8 +57,10 @@ const Preference = ()=> {
 
     return (
         <div className="pref-wrapper">
-            <div>
-                <h4>Settings & Preferences</h4>
+            <div className="card">
+                <div className="card-body">
+                <div>
+                <h5>Settings & Preferences</h5>
             </div>
             <hr/>
             <div className="mt-4">
@@ -116,6 +107,8 @@ const Preference = ()=> {
                             <button className="btn btn-success form-control mb-2" onClick={saveChange()}>Update</button>
                         </form>
                     </div>
+                </div>
+            </div>
                 </div>
             </div>
         </div>

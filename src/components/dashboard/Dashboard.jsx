@@ -2,6 +2,11 @@ import React, {useState } from 'react'
 import Command from '../command/Command';
 import LeftAside from '../left_aside/LeftAside';
 import Preference from '../preference/Preference';
+import {capstoneModel} from '../models/model';
+import Messages from '../messages/Messages'
+import Notifications from '../notifications/Notifications';
+import Profile from '../profile/Profile'
+
 // import { Redirect} from 'react-router-dom';
 // import { useHistory } from 'react-router-dom';
 // import { useOktaAuth } from '@okta/okta-react';
@@ -12,21 +17,7 @@ const Dashboard = () => {
     // const [history, setHistory] = useState(useHistory());
     // const [oktaAuth, setOktaAuth] = useState(useOktaAuth()); 
     // const [authState, setAuthState] = useState(useOktaAuth());
-    const [menuItems, setMenuItems] = useState( [
-        {
-            id: 0,
-            name: 'dashboard', 
-            alias: 'Dashboard', 
-            selected: true
-        }, 
-        {
-            id: 1,
-            name: 'preference', 
-            alias: 'Preference', 
-            selected: false
-        }
-
-    ])
+    const [menuItems, setMenuItems] = useState(capstoneModel.navigationItems)
     
     // method handle change 
     const handleChange = () => (event)=>{
@@ -74,7 +65,7 @@ const Dashboard = () => {
                             <LeftAside menuItems= {menuItems} handleChange={handleChange}></LeftAside>
                         </div>
                         <div className="col-lg-10 col-md-8">
-                            <Command></Command>
+                            <Profile></Profile>
                         </div>
                     </div>
                 </div>
@@ -93,6 +84,47 @@ const Dashboard = () => {
                     </div>
                 </div>
             )
+        case 'messages':
+            return(
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-lg-2 col-md-4">
+                            <LeftAside menuItems= {menuItems} handleChange={handleChange}></LeftAside>
+                        </div>
+                        <div className="col-lg-10 col-md-8">
+                            <Messages></Messages>
+                        </div>
+                    </div>
+                </div>
+            )
+        case 'action-center':
+            return(
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-lg-2 col-md-4">
+                            <LeftAside menuItems= {menuItems} handleChange={handleChange}></LeftAside>
+                        </div>
+                        <div className="col-lg-10 col-md-8">
+                            <Command></Command>
+                        </div>
+                    </div>
+                </div>
+            )
+        case 'notifications':
+            return(
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-lg-2 col-md-4">
+                            <LeftAside menuItems= {menuItems} handleChange={handleChange}></LeftAside>
+                        </div>
+                        <div className="col-lg-10 col-md-8">
+                            <Notifications></Notifications>
+                        </div>
+                    </div>
+                </div>
+            )
+
+
         default: {
             return null
         }

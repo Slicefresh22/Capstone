@@ -44,62 +44,60 @@ const Command = () => {
     }
 
     return (
-        <div>
-            <div className="command-wrapper mb-4">
-                <h4>Voice Command Center</h4>
-                <hr/>
+        <div className="command-wrapper">
+            <div className="card">
+                <div className="card-body">
+                    <h5>Action Center</h5>
+                </div>
             </div>
+            <br/>
             <div className="row">
-                <div className="col-md-6 card">
-                    <div className="card-body">
-                        <div className="row">
-                            <div className="col-lg-6 mb-4">
-                                <button onClick= {startRecoding()} className="btn btn-warning" style={{backgroundColor:'orange'}}>Start Listening</button>
-                            </div>
-                            <div className="col-lg-6 mb-4">
-                                <button onClick= {speak()} className="btn btn-danger" style={{backgroundColor:''}}>Stop Listening</button>
-                            </div>
+                <div className="col-lg-6">
+                    <div className="card">
+                        <div className="card-body">
+                            <h6>Start Voice Regoniction</h6>
                             <hr/>
-                            <br/>
-                            <div className="mt-4 mb-4">
-                                <p>Enter Command Manually Below</p>
-                                <form className="form-group">
-                                    <input onChange={handleOnchange} className="form-control" type="text" name="command" style={{height: '100px'}}/>
-                                    <br/>
-                                    <button onClick={send} className="btn" style={{backgroundColor:'orange'}}>Send</button>
-                                </form>
+                            <div className="row">
+                                <div className="col-lg-6 mb-4 card-body">
+                                    <button onClick= {startRecoding()} className="btn btn-warning" style={{backgroundColor:'orange'}}>Start Listening</button>
+                                </div>
+                                <div className="col-lg-6 mb-4  card-body">
+                                    <button onClick= {speak()} className="btn btn-danger" style={{backgroundColor:''}}>Stop Listening</button>
+                                </div>
                             </div>
+                        </div>
+                    </div>
+                    <br/>
+
+                    <div className="card">
+                        <div className="card-body">
+                            <h6>Enter your command Manually</h6>
+                            <hr/>
+                            <form className="form-group">
+                                <input className="form-control" onChange={handleOnchange} type="text" name="command" style={{height: '100px'}}/>
+                                <br/>
+                                <button className="btn" style={{backgroundColor:'orange'}} onClick={send}>Send</button>
+                            </form>
                         </div>
                     </div>
 
                 </div>
                 <div className="col-lg-6">
-                    <div>
-                        <h5>Results history</h5>
-                        <hr/>
-                        <div className="card-boby">
-                           {statusMessage.map((mess) => (
-                               <div style={{height:'80px', backgroundColor:'#e8d43f'}} className="alert mt-2" key={mess.id}>
-                                   <div>@{mess.time} <p className="text-center mt-0">{mess.data}</p></div>
-                               </div>
-                           ))}
+                <div className="card">
+                        <div className="card-body">
+                            <h6>Results History</h6>
+                            <hr/>
+                            <div className="card-boby">
+                                {statusMessage.map((mess) => (
+                                    <div style={{height:'80px', backgroundColor:'#e8d43f'}} className="alert mt-2" key={mess.id}>
+                                        <div>@{mess.time} <p className="text-center mt-0">{mess.data}</p></div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <br/>
-           {/*<p>Enter Command Manually Below</p>
-            <div className="row">
-                <div className="col-lg-6 card">
-                    <div className="card-body">
-                        <form className="form-group">
-                            <input className="form-control" type="text" name="command" style={{height: '100px'}}/>
-                            <br/>
-                            <button className="btn" style={{backgroundColor:'orange'}}>Send</button>
-                        </form>
-                    </div>
-                </div>
-           </div>*/}
         </div>
     )
 };

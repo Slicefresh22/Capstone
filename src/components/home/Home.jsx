@@ -1,5 +1,9 @@
 import React, { Component } from 'react'; 
 import neurolinks from '../images/neurolinks.jpg';
+import neurolink2 from '../images/neurolinks2.jpg';
+import iot from '../images/IOT.jpg';
+import iot2 from '../images/IOT2.jpg';
+
 import '../../App.css';
 
 class Home extends Component {
@@ -28,8 +32,15 @@ class Home extends Component {
   }
 }
 
-const bg = {
-  backgroundImage: `url("${neurolinks}")`, 
-  height:'600px'
+const myBgs = [ neurolinks,iot, iot2, neurolink2]; 
+
+const getRandomNumber = ()=> {
+  return Math.floor(Math.random() * (myBgs.length - 0) + 0);
 }
+const bg = {
+  backgroundImage: `url("${myBgs[getRandomNumber()]}")`, 
+  height:'700px'
+}
+
+
 export default Home;

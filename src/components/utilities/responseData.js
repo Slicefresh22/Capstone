@@ -74,17 +74,22 @@ const generateId = () => {
 const getTimeAndDate = () => {
     var time = Date.now(); 
     var date = new Date(time); 
-    const hours = date.getHours(); 
+    let hours = date.getHours(); 
     const tempmin = date.getMinutes();
     let minute =''; 
     if(tempmin < 10){
         minute = `0${tempmin}`
     }
-    
-    let theTime = ''; 
-    hours < 12 ? theTime = `${hours}:${minute}` : theTime = `${hours - 12}:${minute}`; 
+    else {
+        minute = tempmin;
+    }
 
-    return theTime;
+    if(hours > 12) {
+        hours -= 12;
+    }
+    // hours < 12 ? theTime = `${hours}:${minute}` : theTime = `${hours + 12}:${minute}`; 
+
+    return hours + ":" + minute;
 }
 
 export const getResponseHistory = () => {
