@@ -9,6 +9,8 @@ let tempUrl;
 let humidUrl;
 let lightOnOff = '';
 const url = 'https://37vspy4wf0.execute-api.us-west-2.amazonaws.com/prod/capstone';
+const saveUrl = 'https://37vspy4wf0.execute-api.us-west-2.amazonaws.com/prod/saveCapstoneSettings';
+
 
 export const loadPrerence = async ()=> {
    const promise = await axios.get(url)
@@ -18,16 +20,17 @@ export const loadPrerence = async ()=> {
 export const savePreference = async(data) => {
    // only update if not empty 
    await data.forEach(item => {
-      if(item.value !== '' || item.url !== null) {
+      if(item.value){
          const data = {
-            "id": parseInt(item.id),
-            "url": item.value
+            'id': item.id,
+            'url': item.value
          }
-         console.log(data);
-         axios.put(url, {
-            body: data
+
+         axios(saveUrl, {
+            method: 'PUT', 
+            body: JSON.stringify(data)
          })
-         .then(response => console.log(response))
+         .then(res => console.log(res))
          .catch(err => console.log(err));
       }
    })
