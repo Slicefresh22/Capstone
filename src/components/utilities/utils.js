@@ -240,7 +240,6 @@ export const getAverages = () => {
 const LightStatus = async () => {
    await axios.get(`https://api.thingspeak.com/channels/1348356/fields/1.json?api_key=MKK4AAYSXG0A4H02&results=1`)
    .then(res => {
-      console.log(res.data.feeds[0].field1);
       if(parseInt(res.data.feeds[0].field1) === 1) {
          lightOnOff = 'ON'; 
       }
