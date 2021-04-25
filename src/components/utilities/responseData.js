@@ -8,6 +8,8 @@ const temperaturePhrases = ['temperature', 'temp','weather'];
 const humidityPhrases = ['humidity', 'humid']; 
 const lightPhrases = ['light']; 
 const wakeNamePhrase = ['jasmine', 'jazmine', 'jazz'];
+const fanOnPhrases = ['fan on', 'turn on the fan','turn the fan on', 'start the fan', 'cool the room down'];
+const fanOffPhrases = ['fan off', 'turn off the fan', 'turn the fan off', 'it too cold, heat up the room'];
 
 export const responseMessage = (data, topic = '')=> {
     const {temperature, humidity} = data;
@@ -119,6 +121,26 @@ export const itContainsLightOn = (command) => {
 export const itContainsLightOff = (command) => {
     let contains = false;
     lightOffPhrases.forEach(phrase =>{
+        if(parseReExp(phrase).test(command) || parseReExp(phrase.toUpperCase()).test(command) || parseReExp(phrase.toLowerCase()).test(command)){
+            contains = true;
+        }
+    })
+    return contains; 
+}
+
+export const itContainsFanOn = (command) => {
+    let contains = false;
+    fanOnPhrases.forEach(phrase =>{
+        if(parseReExp(phrase).test(command) || parseReExp(phrase.toUpperCase()).test(command) || parseReExp(phrase.toLowerCase()).test(command)){
+            contains = true;
+        }
+    })
+    return contains; 
+}
+
+export const itContainsFanOff = (command) => {
+    let contains = false;
+    fanOffPhrases.forEach(phrase =>{
         if(parseReExp(phrase).test(command) || parseReExp(phrase.toUpperCase()).test(command) || parseReExp(phrase.toLowerCase()).test(command)){
             contains = true;
         }

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { say, restartRecognition} from '../command/CommandControl';
-import {responseMessage, itContainsGreetings, itContainsLightOn, itContainsLightOff, itContainsGeneric} from './responseData';
+import {responseMessage, itContainsGreetings, itContainsFanOff, itContainsFanOn, 
+   itContainsLightOn, itContainsLightOff, itContainsGeneric} from './responseData';
 import {playSound} from '../audio/Audio'
 let preferenceItems = [];
 let HomeEnvi = {};
@@ -8,6 +9,7 @@ let home = {};
 let tempUrl;
 let humidUrl;
 let lightOnOff = '';
+let fanOnOff = '';
 const url = 'https://37vspy4wf0.execute-api.us-west-2.amazonaws.com/prod/capstone';
 const saveUrl = 'https://37vspy4wf0.execute-api.us-west-2.amazonaws.com/prod/saveCapstoneSettings';
 
@@ -130,6 +132,29 @@ const writeLightStatus = async (lightStatus) => {
    } 
 }
 
+const fanCommandParser = (status) =>{
+   if(status === 1){
+      axios.get(`https://api.thingspeak.com/update?api_key=0V9GIV8P3WZQRD4I&field2=${status}`)
+      .then(res => {
+         if(res.status === 200){
+            say('OK...i started the fan');
+            getFanStatus();
+         }
+      })
+      .catch(err => console.log(err));
+   }
+   if(status === 0){
+      axios.get(`https://api.thingspeak.com/update?api_key=0V9GIV8P3WZQRD4I&field2=${status}`)
+      .then(res => {
+         if(res.status === 200){
+            say('the fan is stopped');
+            getFanStatus();
+         }
+      })
+      .catch(err => console.log(err));
+   }
+}
+
 export const commandSwitcher = (command) => {
    // contains the word temperature or humidity
    if(itContainsGeneric(command, 'temperature') || itContainsGeneric(command, 'humidity')){
@@ -153,6 +178,12 @@ export const commandSwitcher = (command) => {
       }, 2000);
       restartRecognition();
    }
+   else if(itContainsFanOff(command)){
+      fanCommandParser(0); // send the off command
+   }
+   else if(itContainsFanOn(command)){
+      fanCommandParser(1); // send the on command
+   }
    else {
       say("Hello");
       setTimeout(function(){
@@ -165,13 +196,8 @@ export const commandSwitcher = (command) => {
 
 export const getCurrentUser = () => {
    const idToken = JSON.parse(localStorage.getItem("okta-token-storage"));
-   const user = {
-       fullname: idToken.idToken.claims.name,
-       email: idToken.idToken.claims.email,
-       username: idToken.idToken.claims.preferred_username
-   }
-   
-   return user;
+   const {users_info} = idToken.accessToken.claims;
+   return users_info;
 }
 
 
@@ -250,7 +276,25 @@ const LightStatus = async () => {
    .catch(err => console.log(err));
 }
 
+const fanStatus = async () => {
+   await axios.get(`https://api.thingspeak.com/channels/1348356/fields/2.json?api_key=MKK4AAYSXG0A4H02&results=1`)
+   .then(res => {
+      if(parseInt(res.data.feeds[0].field2) === 1) {
+         fanOnOff = 'ON'; 
+      }
+      else {
+         fanOnOff = 'OFF';
+      }
+   })
+   .catch(err => console.log(err));
+}
+
 export const getLightStatus = () => {
    LightStatus();
    return lightOnOff;
+}
+
+export const getFanStatus = () => {
+   fanStatus();
+   return fanOnOff;
 }
