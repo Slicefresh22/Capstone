@@ -12,14 +12,14 @@ class Profile extends Component {
     };
 
     getDateTime() {
-        var today = new Date();
+        /*var today = new Date();
         var s = today.getSeconds();
         var m = today.getMinutes();
         var h = today.getHours();
         // const liveTime = ("0" + h).substr(-2) + ":" + ("0" + m).substr(-2) + ":" + ("0" + s).substr(-2);
         var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        // var dateTime = date+' '+time;
+        // var dateTime = date+' '+time;*/
         let mytime = new Date().toLocaleTimeString();
         try{
             const elem = document.getElementById('currentTime')
