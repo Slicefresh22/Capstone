@@ -16,10 +16,10 @@ class Profile extends Component {
         var s = today.getSeconds();
         var m = today.getMinutes();
         var h = today.getHours();
-        const liveTime = ("0" + h).substr(-2) + ":" + ("0" + m).substr(-2) + ":" + ("0" + s).substr(-2);
+        // const liveTime = ("0" + h).substr(-2) + ":" + ("0" + m).substr(-2) + ":" + ("0" + s).substr(-2);
         var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        var dateTime = date+' '+time;
+        // var dateTime = date+' '+time;
         let mytime = new Date().toLocaleTimeString();
         try{
             const elem = document.getElementById('currentTime')
@@ -38,7 +38,7 @@ class Profile extends Component {
 
     render() {
         const {lightStatus, fanStatus,users_info} = this.state;
-        const {firstName, lastName} = users_info;
+        const {firstName} = users_info;
         return (
             <div className="profile-wrapper">
                 <div className="card">
