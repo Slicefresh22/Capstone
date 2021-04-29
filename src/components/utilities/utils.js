@@ -139,7 +139,7 @@ const fanCommandParser = (status) =>{
       axios.get(`https://api.thingspeak.com/update?api_key=8F024MYT48U3RCT2&field1=${status}`)
       .then(res => {
          if(res.status === 200){
-            // say('OK...i started the fan');
+            say('OK...i started the fan');
             getFanStatus();
          }
       })
@@ -294,9 +294,9 @@ const LightStatus = async () => {
 }
 
 const fanStatus = async () => {
-   await axios.get(`https://api.thingspeak.com/channels/1348356/fields/2.json?api_key=MKK4AAYSXG0A4H02&results=1`)
+   await axios.get(`https://api.thingspeak.com/channels/1372073/fields/1.json?api_key=A1QFZMR1UWJMKFTN&results=1`)
    .then(res => {
-      if(parseInt(res.data.feeds[0].field2) === 1) {
+      if(parseInt(res.data.feeds[0].field1) === 1) {
          fanOnOff = 'ON'; 
       }
       else {

@@ -9,9 +9,14 @@ const Preference = ()=> {
     
 
     useEffect(()=>{
+        handleLoadPreferences();
+    });
+
+
+    const handleLoadPreferences = ()=> {
         loadPrerence().then(res =>setMyAPI(res.data.Items))
         .catch(err => console.log(err));
-    });
+    }
 
     const handleChange = ()=> (event)=>{
         // updateUrl(event.target.name, event.target.value); 

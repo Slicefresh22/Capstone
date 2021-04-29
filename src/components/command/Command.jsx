@@ -1,12 +1,17 @@
 
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {getTemperature, getHomeEnvi, commandSwitcher, getCurrentUser} from '../utilities/utils';
 import {say,startRecording, getErrors} from './CommandControl';
 import {responseMessage, getResponseHistory} from '../utilities/responseData';
 
 const Command = () => {
     const [command, setCommand] = useState('');
-    const [statusMessage, setStatusMessage] = useState([]); 
+    const [statusMessage, setStatusMessage] = useState([]);
+
+
+    useEffect(()=> {
+        getTemperature();
+    })
 
     const speak = ()=> (e) => {
         getTemperature()
