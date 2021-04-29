@@ -35,7 +35,7 @@ class Profile extends Component {
        this.setState({averageTemp: averageTemp, averageHumid: averageHumid});
        this.setState({lightStatus: getLightStatus()});
        this.setState({fanStatus: getFanStatus()});
-       this.setState({users_info: {... this.state.users_info, firstName: getCurrentUser()}});
+       this.setState({users_info: {...this.state.users_info, firstName: getCurrentUser()}});
     }
 
     render() {

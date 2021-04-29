@@ -186,13 +186,15 @@ export const commandSwitcher = (command) => {
       say( `Hello, ${getCurrentUser()}`);
       setTimeout(() => {
          say('How can i be of assistance?');
-         console.log(isSpeechRecognitionEnabled());
       }, 3000);
    }
    else if(itContainsGreetings(command)){
       say(`Hi, ${getCurrentUser()}`);
       setTimeout(function(){
-         say('What can i help you with?.')
+         say('What can i help you with?.'); 
+         if(isSpeechRecognitionEnabled()){
+            restartRecognition();
+         }
       }, 3000);
       
    }
