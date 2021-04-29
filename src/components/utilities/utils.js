@@ -1,9 +1,8 @@
 import axios from 'axios'
-import { say, restartRecognition} from '../command/CommandControl';
+import { say} from '../command/CommandControl';
 import {responseMessage, itContainsGreetings, itContainsFanOff, itContainsFanOn, 
 itContainsLightOn, itContainsLightOff, itContainsGeneric} from './responseData';
 import {playSound} from '../audio/Audio'; 
-import {isSpeechRecognitionEnabled} from '../command/CommandControl'; 
 
 let preferenceItems = [];
 let HomeEnvi = {};
@@ -192,9 +191,6 @@ export const commandSwitcher = (command) => {
       say(`Hi, ${getCurrentUser()}`);
       setTimeout(function(){
          say('What can i help you with?.'); 
-         if(isSpeechRecognitionEnabled()){
-            restartRecognition();
-         }
       }, 3000);
       
    }

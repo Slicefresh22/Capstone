@@ -5,31 +5,14 @@ export const synth = window.speechSynthesis;
 let myerror = [];
 let speech = null;
 
-export const startRecoding =  () => async (e) => {
+export const startRecording = () => async (e) =>{
     await recognition.start();
-    // e.preventDefault();
 }
 
-export const isSpeechRecognitionEnabled = () => {
-    let isEnabled = false; 
-    recognition ? isEnabled = true : isEnabled = false;
-    console.log(recognition);
-    return isEnabled;
-}
-
-export const restartRecognition = async () => {
-    try{
-        await recognition.stop(); 
-        await recognition.start();
-    }catch(err) {
-        console.log(err);
-    }
-}
 
 recognition.onresult = async (event)=> {
     await recognition.stop(); // stop the cording 
     speech = event.results[0][0].transcript;
-    // say(speech);
     commandSwitcher(speech);
 }
 

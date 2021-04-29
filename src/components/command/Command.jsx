@@ -1,7 +1,7 @@
 
 import React, {useState} from 'react'
 import {getTemperature, getHomeEnvi, commandSwitcher, getCurrentUser} from '../utilities/utils';
-import {say,startRecoding, getErrors} from './CommandControl';
+import {say,startRecording, getErrors} from './CommandControl';
 import {responseMessage, getResponseHistory} from '../utilities/responseData';
 
 const Command = () => {
@@ -66,7 +66,7 @@ const Command = () => {
                             <hr/>
                             <div className="row">
                                 <div className="col-lg-6 mb-4 card-body">
-                                    <button onClick= {startRecoding()} className="btn btn-warning" style={{backgroundColor:'orange'}}>Start Listening</button>
+                                    <button onClick= {startRecording()} className="btn btn-warning" style={{backgroundColor:'orange'}}>Start Listening</button>
                                 </div>
                                 <div className="col-lg-6 mb-4  card-body">
                                     <button onClick= {speak()} className="btn btn-warning" style={{backgroundColor:'orange'}}>Status Update</button>
