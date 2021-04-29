@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import {getCurrentUser} from '../utilities/utils'; 
 
 var responseHistory = []; 
 const greetingsPhrases = [ 'Hello there', 'hello', 'Hello', 'Hi', 'hi', 'good morning', 'hey', 'Hey']; 
@@ -7,7 +8,7 @@ const lightOffPhrases = ['light off', 'turn off the light', 'turn the light off'
 const temperaturePhrases = ['temperature', 'temp','weather'];
 const humidityPhrases = ['humidity', 'humid']; 
 const lightPhrases = ['light']; 
-const wakeNamePhrase = ['jasmine', 'jazmine', 'jazz'];
+const wakeNamePhrase = ['dave', 'David', 'Dave', 'david'];
 const fanOnPhrases = ['fan on', 'turn on the fan','turn the fan on', 'start the fan', 'cool the room down'];
 const fanOffPhrases = ['fan off', 'turn off the fan', 'turn the fan off', 'it too cold, heat up the room'];
 
@@ -20,7 +21,7 @@ export const responseMessage = (data, topic = '')=> {
         case 'temperature':
             // do somethings here
             randomMessage = [
-                `Right now, the temerature is ${temperature} degrees fahrenheit`, 
+                `${getCurrentUser()}, Right now, the temerature is ${temperature} degrees fahrenheit`, 
                 `At your current location, the temperature is ${temperature} degrees fahrenheit, as of ${getTimeAndDate()}`,
                 `${temperature} degrees fahrenheit, is the current temperature at your location`
             ]

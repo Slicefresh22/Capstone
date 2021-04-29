@@ -8,43 +8,45 @@ class Profile extends Component {
         fanStatus: '',
         averageTemp: 0, 
         averageHumid: 0, 
-        users_info: {}
+        users_info: {
+            firstName: ''
+        }
     };
 
-    getDateTime() {
-        /*var today = new Date();
+    /*getDateTime() {
+        var today = new Date();
         var s = today.getSeconds();
         var m = today.getMinutes();
         var h = today.getHours();
         // const liveTime = ("0" + h).substr(-2) + ":" + ("0" + m).substr(-2) + ":" + ("0" + s).substr(-2);
         var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        // var dateTime = date+' '+time;*/
+        // var dateTime = date+' '+time;
         let mytime = new Date().toLocaleTimeString();
         try{
             const elem = document.getElementById('currentTime')
             elem.innerHTML = mytime;
         }catch(err){console.log(err)};
         setInterval(this.getDateTime, 1000);
-    }
+    }*/
 
     componentDidMount(){
        const {averageTemp,averageHumid} = getAverages();
        this.setState({averageTemp: averageTemp, averageHumid: averageHumid});
        this.setState({lightStatus: getLightStatus()});
        this.setState({fanStatus: getFanStatus()});
-       this.setState({users_info: getCurrentUser()});
+       this.setState({users_info: {... this.state.users_info, firstName: getCurrentUser()}});
     }
 
     render() {
         const {lightStatus, fanStatus,users_info} = this.state;
-        const {firstName} = users_info;
+        const {firstName} = users_info;        
         return (
             <div className="profile-wrapper">
                 <div className="card">
                     <div className="card-body">
                         <h2 className="lead">Welcome to your Dashboard, 
-                         {" "+ firstName} <span className="lead" id="currentTime" style={{float: 'right'}}>{this.getDateTime()}</span></h2>
+                         {" "+ firstName}</h2>
                     </div>
                 </div>
                 <br/>
@@ -89,19 +91,19 @@ class Profile extends Component {
                     <div className="col-lg-4">
                         <div className="card">
                         <iframe className="card-body"  height="280" style={{border: '1px solid #cccccc'}} 
-                        src="https://thingspeak.com/channels/1348356/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=step" title="Light"></iframe>
+                        src="https://thingspeak.com/channels/1348356/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line" title="Light"></iframe>
                         </div>
                     </div>
                     <div className="col-lg-4">
                         <div className="card">
                         <iframe title="temperature" className="card-body"  height="280" style={{border: '1px solid #cccccc'}} 
-                        src="https://thingspeak.com/channels/1320900/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Temperature&type=column&xaxis=Time&yaxis=Temperature"></iframe>
+                        src="https://thingspeak.com/channels/1320900/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Temperature&type=line&xaxis=Time&yaxis=Temperature"></iframe>
                         </div>
                     </div>
                     <div className="col-lg-4">
                         <div className="card">
                         <iframe title="humidity" className="card-body"  height="280" style={{border: '1px solid #cccccc'}} 
-                        src="https://thingspeak.com/channels/1320900/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Humidity&type=column"></iframe>
+                        src="https://thingspeak.com/channels/1320900/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Humidity&type=line"></iframe>
                         </div>
                     </div>
                 </div>

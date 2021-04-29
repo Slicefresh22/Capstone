@@ -1,8 +1,10 @@
 import axios from 'axios'
 import { say, restartRecognition} from '../command/CommandControl';
 import {responseMessage, itContainsGreetings, itContainsFanOff, itContainsFanOn, 
-   itContainsLightOn, itContainsLightOff, itContainsGeneric} from './responseData';
-import {playSound} from '../audio/Audio'
+itContainsLightOn, itContainsLightOff, itContainsGeneric} from './responseData';
+import {playSound} from '../audio/Audio'; 
+import {isSpeechRecognitionEnabled} from '../command/CommandControl'; 
+
 let preferenceItems = [];
 let HomeEnvi = {};
 let home = {};
@@ -12,6 +14,7 @@ let lightOnOff = '';
 let fanOnOff = '';
 const url = 'https://37vspy4wf0.execute-api.us-west-2.amazonaws.com/prod/capstone';
 const saveUrl = 'https://37vspy4wf0.execute-api.us-west-2.amazonaws.com/prod/saveCapstoneSettings';
+
 
 
 export const loadPrerence = async ()=> {
@@ -134,24 +137,35 @@ const writeLightStatus = async (lightStatus) => {
 
 const fanCommandParser = (status) =>{
    if(status === 1){
-      axios.get(`https://api.thingspeak.com/update?api_key=0V9GIV8P3WZQRD4I&field2=${status}`)
+      axios.get(`https://api.thingspeak.com/update?api_key=8F024MYT48U3RCT2&field1=${status}`)
       .then(res => {
          if(res.status === 200){
-            say('OK...i started the fan');
+            // say('OK...i started the fan');
             getFanStatus();
          }
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+         console.log(err); 
+         say('An error has occurred...');
+         setTimeout(() =>{
+            say('error type...'+ err);
+         }, 3000);
+      });
    }
    if(status === 0){
-      axios.get(`https://api.thingspeak.com/update?api_key=0V9GIV8P3WZQRD4I&field2=${status}`)
+      axios.get(`https://api.thingspeak.com/update?api_key=8F024MYT48U3RCT2&field1=${status}`)
       .then(res => {
          if(res.status === 200){
-            say('the fan is stopped');
             getFanStatus();
          }
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+         console.log(err); 
+         say('I apologize, but it looks like there was an error...');
+         setTimeout(()=> {
+            say('error type...'+ err);
+         }, 3000);
+      });
    }
 }
 
@@ -169,14 +183,18 @@ export const commandSwitcher = (command) => {
    }
    // contains the wakeName
    else if(itContainsGeneric(command, 'wakename')) {
-      say("Hello, I'm listening..."); 
+      say( `Hello, ${getCurrentUser()}`);
+      setTimeout(() => {
+         say('How can i be of assistance?');
+         console.log(isSpeechRecognitionEnabled());
+      }, 3000);
    }
    else if(itContainsGreetings(command)){
-      say("Hi");
+      say(`Hi, ${getCurrentUser()}`);
       setTimeout(function(){
          say('What can i help you with?.')
-      }, 2000);
-      restartRecognition();
+      }, 3000);
+      
    }
    else if(itContainsFanOff(command)){
       fanCommandParser(0); // send the off command
@@ -185,17 +203,18 @@ export const commandSwitcher = (command) => {
       fanCommandParser(1); // send the on command
    }
    else {
-      say("Hello");
-      setTimeout(function(){
-         say(`I'm not sure what you meant by: ${command}`);
+      say(`${getCurrentUser()}, i am processing your command. please wait...`);
+      setTimeout(()=> {
+         say(`I apologize, but I'm not sure what you meant by: ${command}`);
          say('Please try saying or typing your command again.')
-      }, 2000); 
+      }, 5000);
+      
    }
 }
 
 
 export const getCurrentUser = () => {
-   const idToken = JSON.parse(localStorage.getItem("okta-token-storage"));
+   const idToken = JSON.parse(localStorage.getItem('okta-token-storage'));
    const {users_info} = idToken.accessToken.claims;
    return users_info;
 }

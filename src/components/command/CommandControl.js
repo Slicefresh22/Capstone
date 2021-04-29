@@ -10,6 +10,13 @@ export const startRecoding =  () => async (e) => {
     // e.preventDefault();
 }
 
+export const isSpeechRecognitionEnabled = () => {
+    let isEnabled = false; 
+    recognition ? isEnabled = true : isEnabled = false;
+    console.log(recognition);
+    return isEnabled;
+}
+
 export const restartRecognition = async () => {
     try{
         await recognition.stop(); 
@@ -36,7 +43,8 @@ recognition.onerror = (event) => {
     say("Oops, I have encountered an error: " + event.error);
 };
 
-export const say = (message, voice = 3) => {
+export const say = (message) => {
+    const voice = 3;
     var utterance  = new SpeechSynthesisUtterance(message);
     utterance.voice = setVoice(voice);
     utterance.rate = 1;
