@@ -67,7 +67,7 @@ const Command = () => {
                 <div className="col-lg-6">
                     <div className="card">
                         <div className="card-body">
-                            <h6>Start Voice Regoniction</h6>
+                            <h6>Start Voice Regonition</h6>
                             <hr/>
                             <div className="row">
                                 <div className="col-lg-6 mb-4 card-body">
